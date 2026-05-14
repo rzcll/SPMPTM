@@ -220,7 +220,7 @@
 
     <script>
         // --- MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI ---
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby5-EXWwFqhubIykK9EaWylEXY6CHzViHpsYzL_rJ3Uk_K272nMP5z_aZQOlznoDfRqvQ/exec"; 
+        const WEB_APP_URL = "MASUKKAN_URL_WEB_APP_GAS_DISINI"; 
         
         let loggedInUser = ""; 
 
@@ -523,9 +523,7 @@
             `;
         }
 
-        // LOGIKA SORTING DESA BERDASARKAN JUMLAH TERBANYAK
         function renderDesaGrid(id, desaObj, color) {
-            // Sort Descending (Jumlah Terbanyak ke Terkecil)
             const sortedDesa = Object.entries(desaObj).sort((a,b) => b[1] - a[1]);
             const html = sortedDesa.map(([name, count], index) => {
                 let medal = '';
@@ -540,16 +538,47 @@
 
         function exportToExcel() {
             const wb = XLSX.utils.book_new();
-            // Sort Descending di Export Excel
             const formatData = (obj) => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([Desa, Jumlah]) => ({ Desa, Jumlah }));
 
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["LAPORAN SPM"], ["USPRO", summary.uspro.Total], ["HT", summary.ht.Total], ["DM", summary.dm.Total]]), "Rekap_SPM");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.pelayananP)), "Rekap_KolomP_Pelayanan");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgDewasaF)), "Rekap_KolomF_CKGDewasa");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgLansiaF)), "Rekap_KolomF_CKGLansia");
+            // 1. REKAP SPM (Sesuai dengan UI Dashboard: Pemisahan Folder & L/P)
+            const rekapData = [
+                ["LAPORAN REKAPITULASI SPM PRO"],
+                [""],
+                ["1. DETAIL USPRO (Usia 15-59 Tahun)"],
+                ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
+                ["Folder Pelayanan", summary.uspro.pel_L, summary.uspro.pel_P, summary.uspro.pel_L + summary.uspro.pel_P],
+                ["Folder CKG", summary.uspro.ckg_L, summary.uspro.ckg_P, summary.uspro.ckg_L + summary.uspro.ckg_P],
+                ["Total Keseluruhan", summary.uspro.pel_L + summary.uspro.ckg_L, summary.uspro.pel_P + summary.uspro.ckg_P, summary.uspro.Total],
+                [""],
+                ["2. DETAIL HIPERTENSI (HT)"],
+                ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
+                ["Folder Pelayanan", summary.ht.pel_L, summary.ht.pel_P, summary.ht.pel_L + summary.ht.pel_P],
+                ["Folder CKG", summary.ht.ckg_L, summary.ht.ckg_P, summary.ht.ckg_L + summary.ht.ckg_P],
+                ["Total Keseluruhan", summary.ht.pel_L + summary.ht.ckg_L, summary.ht.pel_P + summary.ht.ckg_P, summary.ht.Total],
+                [""],
+                ["3. DETAIL DIABETES (DM)"],
+                ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
+                ["Folder Pelayanan", summary.dm.pel_L, summary.dm.pel_P, summary.dm.pel_L + summary.dm.pel_P],
+                ["Folder CKG", summary.dm.ckg_L, summary.dm.ckg_P, summary.dm.ckg_L + summary.dm.ckg_P],
+                ["Total Keseluruhan", summary.dm.pel_L + summary.dm.ckg_L, summary.dm.pel_P + summary.dm.ckg_P, summary.dm.Total],
+            ];
+            
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rekapData), "Rekap_SPM");
+
+            // 2. DISTRIBUSI WILAYAH MASING-MASING SPM
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.uspro.desa)), "Desa_USPRO");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.ht.desa)), "Desa_HT");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.dm.desa)), "Desa_DM");
+
+            // 3. DAFTAR PASIEN MENTAH
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportUSPRO), "Daftar_Pasien_USPRO");
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportHT), "Daftar_Pasien_HT");
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportDM), "Daftar_Pasien_DM");
+            
+            // 4. DAFTAR MENTAH ANALISIS KOLOM LOKAL (Opsional untuk pengecekan data)
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.pelayananP)), "Rekap_Lokal_PelayananP");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgDewasaF)), "Rekap_Lokal_CKGDewasaF");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgLansiaF)), "Rekap_Lokal_CKGLansiaF");
             
             XLSX.writeFile(wb, "Rekapan_SPM_Lengkap_dan_Desa.xlsx");
         }
