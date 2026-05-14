@@ -52,7 +52,6 @@
 </head>
 <body class="text-slate-900 min-h-screen overflow-hidden" id="body-container">
 
-    <!-- MODAL POPUP DATA TIDAK VALID -->
     <div id="invalid-modal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md smooth-overlay opacity-0 px-4">
         <div id="invalid-modal-card" class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl text-center max-w-md w-full transform scale-95 transition-all duration-300">
             <div class="w-24 h-24 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
@@ -64,7 +63,6 @@
         </div>
     </div>
 
-    <!-- OVERLAY LOGIN -->
     <div id="login-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-xl smooth-overlay">
         <div id="login-card" class="glass-panel p-8 md:p-12 rounded-[2.5rem] shadow-2xl max-w-md w-full mx-4 smooth-overlay scale-100 opacity-100 relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-400/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -85,7 +83,6 @@
         </div>
     </div>
 
-    <!-- Navigasi -->
     <nav class="sticky top-0 z-50 glass-nav no-print">
         <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
             <div class="flex justify-between h-16 md:h-20 items-center">
@@ -109,7 +106,6 @@
 
     <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-6 md:py-8">
         
-        <!-- BAGIAN UPLOAD -->
         <section id="section-upload" class="max-w-5xl mx-auto animate-in fade-in duration-500 no-print pb-20">
             <div class="text-center mb-8 md:mb-12">
                 <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Portal Analisis SPM</h1>
@@ -120,7 +116,6 @@
             <input type="file" id="input-ckg" webkitdirectory directory multiple class="hidden" disabled onchange="handleCKGUpload(event)">
 
             <div class="flex flex-col max-w-3xl mx-auto relative">
-                <!-- CARD PELAYANAN -->
                 <div id="card-pelayanan" class="glass-panel transition-all duration-700 rounded-3xl md:rounded-[2.5rem] p-6 sm:p-8 md:p-14 shadow-2xl relative z-20">
                     <div id="pelayanan-large" class="flex flex-col items-center text-center transition-all duration-500 opacity-100 scale-100">
                         <div class="w-20 h-20 md:w-24 md:h-24 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-inner"><svg class="w-10 h-10 md:w-12 md:h-12 text-indigo-600 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
@@ -137,7 +132,6 @@
                     </div>
                 </div>
 
-                <!-- CARD CKG -->
                 <div id="card-ckg" class="glass-panel transition-all duration-700 rounded-2xl p-5 md:p-6 opacity-50 scale-95 grayscale pointer-events-none relative z-10 -mt-4 shadow-sm border-t-0">
                     <div id="ckg-small" class="flex items-center gap-4 transition-all duration-500 opacity-100">
                         <div class="w-12 h-12 bg-slate-200/50 rounded-xl flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
@@ -157,10 +151,8 @@
             </div>
         </section>
 
-        <!-- DASHBOARD HASIL -->
         <section id="section-dashboard" class="hidden space-y-12 animate-in slide-in-from-bottom-4 duration-700 pb-20">
             
-            <!-- RINGKASAN ATAS -->
             <div class="glass-panel rounded-[2.5rem] p-8 md:p-12 shadow-2xl">
                 <div class="flex flex-col lg:flex-row justify-between items-start gap-8">
                     <div class="w-full lg:w-1/2">
@@ -176,40 +168,34 @@
                 </div>
             </div>
 
-            <!-- TABEL DETAIL -->
             <div class="space-y-12">
-                <!-- USPRO -->
                 <div class="report-card glass-panel rounded-3xl overflow-hidden border-t-[12px] border-t-indigo-600 shadow-xl flex flex-col">
-                    <div class="px-8 py-6 bg-indigo-600/10"><h4 class="text-xl font-black text-indigo-950 uppercase">Detail USPRO</h4><p class="text-xs font-bold text-indigo-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
+                    <div class="px-8 py-6 bg-indigo-600/10"><h4 class="text-xl font-black text-indigo-950 uppercase">SPM USPRO</h4><p class="text-xs font-bold text-indigo-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
                     <div class="overflow-x-auto"><table class="w-full text-left min-w-[600px]"><thead class="bg-slate-900/5 text-[10px] font-black uppercase text-slate-500 tracking-widest"><tr><th class="px-8 py-5">Sumber Data</th><th class="px-8 py-5 text-center text-indigo-600">Laki-laki</th><th class="px-8 py-5 text-center text-indigo-600">Perempuan</th><th class="px-8 py-5 text-center text-indigo-800">Total Unik</th></tr></thead><tbody id="table-uspro-body" class="text-sm font-bold text-slate-800 divide-y divide-white/40"></tbody></table></div>
                     <button onclick="toggleDetail('desa-uspro')" id="btn-desa-uspro" class="w-full py-3 bg-indigo-50 text-indigo-700 font-bold text-sm hover:bg-indigo-100 transition-colors mt-auto">Tampilkan Detail Wilayah</button>
                     <div id="desa-uspro" class="hidden p-6 bg-slate-50/50 border-t border-slate-200">
-                        <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (USPRO)</h5>
+                        <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (SPM USPRO)</h5>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="desa-uspro-container"></div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                    <!-- HT -->
-                    <div class="report-card glass-panel rounded-3xl overflow-hidden border-t-[12px] border-t-rose-600 shadow-xl flex flex-col">
-                        <div class="px-8 py-6 bg-rose-600/10"><h4 class="text-xl font-black text-rose-950 uppercase">Detail Hipertensi (HT)</h4><p class="text-xs font-bold text-rose-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
-                        <div class="overflow-x-auto"><table class="w-full text-left min-w-[500px]"><thead class="bg-slate-900/5 text-[10px] font-black uppercase text-slate-500 tracking-widest"><tr><th class="px-8 py-5">Sumber Data</th><th class="px-8 py-5 text-center text-rose-600">Laki-laki</th><th class="px-8 py-5 text-center text-rose-600">Perempuan</th><th class="px-8 py-5 text-center text-rose-800">Total Unik</th></tr></thead><tbody id="table-ht-body" class="text-sm font-bold text-slate-800 divide-y divide-white/40"></tbody></table></div>
-                        <button onclick="toggleDetail('desa-ht')" id="btn-desa-ht" class="w-full py-3 bg-rose-50 text-rose-700 font-bold text-sm hover:bg-rose-100 transition-colors mt-auto">Tampilkan Detail Wilayah</button>
-                        <div id="desa-ht" class="hidden p-6 bg-slate-50/50 border-t border-slate-200">
-                            <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (HT)</h5>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="desa-ht-container"></div>
-                        </div>
+                <div class="report-card glass-panel rounded-3xl overflow-hidden border-t-[12px] border-t-rose-600 shadow-xl flex flex-col">
+                    <div class="px-8 py-6 bg-rose-600/10"><h4 class="text-xl font-black text-rose-950 uppercase">SPM HT</h4><p class="text-xs font-bold text-rose-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left min-w-[600px]"><thead class="bg-slate-900/5 text-[10px] font-black uppercase text-slate-500 tracking-widest"><tr><th class="px-8 py-5">Sumber Data</th><th class="px-8 py-5 text-center text-rose-600">Laki-laki</th><th class="px-8 py-5 text-center text-rose-600">Perempuan</th><th class="px-8 py-5 text-center text-rose-800">Total Unik</th></tr></thead><tbody id="table-ht-body" class="text-sm font-bold text-slate-800 divide-y divide-white/40"></tbody></table></div>
+                    <button onclick="toggleDetail('desa-ht')" id="btn-desa-ht" class="w-full py-3 bg-rose-50 text-rose-700 font-bold text-sm hover:bg-rose-100 transition-colors mt-auto">Tampilkan Detail Wilayah</button>
+                    <div id="desa-ht" class="hidden p-6 bg-slate-50/50 border-t border-slate-200">
+                        <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (SPM HT)</h5>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="desa-ht-container"></div>
                     </div>
+                </div>
 
-                    <!-- DM -->
-                    <div class="report-card glass-panel rounded-3xl overflow-hidden border-t-[12px] border-t-emerald-600 shadow-xl flex flex-col">
-                        <div class="px-8 py-6 bg-emerald-600/10"><h4 class="text-xl font-black text-emerald-950 uppercase">Detail Diabetes (DM)</h4><p class="text-xs font-bold text-emerald-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
-                        <div class="overflow-x-auto"><table class="w-full text-left min-w-[500px]"><thead class="bg-slate-900/5 text-[10px] font-black uppercase text-slate-500 tracking-widest"><tr><th class="px-8 py-5">Sumber Data</th><th class="px-8 py-5 text-center text-emerald-600">Laki-laki</th><th class="px-8 py-5 text-center text-emerald-600">Perempuan</th><th class="px-8 py-5 text-center text-emerald-800">Total Unik</th></tr></thead><tbody id="table-dm-body" class="text-sm font-bold text-slate-800 divide-y divide-white/40"></tbody></table></div>
-                        <button onclick="toggleDetail('desa-dm')" id="btn-desa-dm" class="w-full py-3 bg-emerald-50 text-emerald-700 font-bold text-sm hover:bg-emerald-100 transition-colors mt-auto">Tampilkan Detail Wilayah</button>
-                        <div id="desa-dm" class="hidden p-6 bg-slate-50/50 border-t border-slate-200">
-                            <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (DM)</h5>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="desa-dm-container"></div>
-                        </div>
+                <div class="report-card glass-panel rounded-3xl overflow-hidden border-t-[12px] border-t-emerald-600 shadow-xl flex flex-col">
+                    <div class="px-8 py-6 bg-emerald-600/10"><h4 class="text-xl font-black text-emerald-950 uppercase">SPM DM</h4><p class="text-xs font-bold text-emerald-700 italic">Gabungan Data Pelayanan & CKG Tanpa Duplikasi</p></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left min-w-[600px]"><thead class="bg-slate-900/5 text-[10px] font-black uppercase text-slate-500 tracking-widest"><tr><th class="px-8 py-5">Sumber Data</th><th class="px-8 py-5 text-center text-emerald-600">Laki-laki</th><th class="px-8 py-5 text-center text-emerald-600">Perempuan</th><th class="px-8 py-5 text-center text-emerald-800">Total Unik</th></tr></thead><tbody id="table-dm-body" class="text-sm font-bold text-slate-800 divide-y divide-white/40"></tbody></table></div>
+                    <button onclick="toggleDetail('desa-dm')" id="btn-desa-dm" class="w-full py-3 bg-emerald-50 text-emerald-700 font-bold text-sm hover:bg-emerald-100 transition-colors mt-auto">Tampilkan Detail Wilayah</button>
+                    <div id="desa-dm" class="hidden p-6 bg-slate-50/50 border-t border-slate-200">
+                        <h5 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest text-center">Papan Peringkat Distribusi Desa (SPM DM)</h5>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="desa-dm-container"></div>
                     </div>
                 </div>
             </div>
@@ -542,19 +528,19 @@
             const rekapData = [
                 ["LAPORAN REKAPITULASI SPM PRO"],
                 [""],
-                ["1. DETAIL USPRO (Usia 15-59 Tahun)"],
+                ["1. SPM USPRO (Usia 15-59 Tahun)"],
                 ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
                 ["Folder Pelayanan", summary.uspro.pel_L, summary.uspro.pel_P, summary.uspro.pel_L + summary.uspro.pel_P],
                 ["Folder CKG", summary.uspro.ckg_L, summary.uspro.ckg_P, summary.uspro.ckg_L + summary.uspro.ckg_P],
                 ["Total Keseluruhan", summary.uspro.pel_L + summary.uspro.ckg_L, summary.uspro.pel_P + summary.uspro.ckg_P, summary.uspro.Total],
                 [""],
-                ["2. DETAIL HIPERTENSI (HT)"],
+                ["2. SPM HT"],
                 ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
                 ["Folder Pelayanan", summary.ht.pel_L, summary.ht.pel_P, summary.ht.pel_L + summary.ht.pel_P],
                 ["Folder CKG", summary.ht.ckg_L, summary.ht.ckg_P, summary.ht.ckg_L + summary.ht.ckg_P],
                 ["Total Keseluruhan", summary.ht.pel_L + summary.ht.ckg_L, summary.ht.pel_P + summary.ht.ckg_P, summary.ht.Total],
                 [""],
-                ["3. DETAIL DIABETES (DM)"],
+                ["3. SPM DM"],
                 ["Sumber Data", "Laki-laki", "Perempuan", "Total Unik"],
                 ["Folder Pelayanan", summary.dm.pel_L, summary.dm.pel_P, summary.dm.pel_L + summary.dm.pel_P],
                 ["Folder CKG", summary.dm.ckg_L, summary.dm.ckg_P, summary.dm.ckg_L + summary.dm.ckg_P],
