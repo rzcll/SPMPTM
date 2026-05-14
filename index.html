@@ -235,7 +235,6 @@
 
             // Logika Hibrid: Mendukung Native GAS & GitHub (via Fetch)
             if (typeof google !== 'undefined' && google.script && google.script.run) {
-                // Mode dalam Google Apps Script Asli
                 google.script.run.withSuccessHandler(function(isValid) {
                     loginBtn.innerText = originalText; loginBtn.disabled = false;
                     if (isValid) proceedLogin(username); else showLoginError("Username tidak terdaftar!");
@@ -244,7 +243,6 @@
                 }).checkUsername(username);
                 
             } else if (WEB_APP_URL && WEB_APP_URL !== "MASUKKAN_URL_WEB_APP_GAS_DISINI") {
-                // Mode di GitHub / Eksternal menggunakan Web App URL (REST API)
                 fetch(`${WEB_APP_URL}?username=${encodeURIComponent(username)}`)
                     .then(response => response.json())
                     .then(isValid => {
@@ -255,7 +253,6 @@
                         loginBtn.innerText = originalText; loginBtn.disabled = false; showLoginError("Gagal menghubungi server!");
                     });
             } else {
-                // Mode Uji Coba Offline (Fallback jika belum di-deploy/URL kosong)
                 setTimeout(() => {
                     loginBtn.innerText = originalText; loginBtn.disabled = false;
                     if (username.toLowerCase() === "admin" || username.toLowerCase() === "tumpang" || username.toLowerCase() === "tajinan" || username.toLowerCase() === "poncokusumo") proceedLogin(username);
@@ -526,7 +523,9 @@
             `;
         }
 
+        // LOGIKA SORTING DESA BERDASARKAN JUMLAH TERBANYAK
         function renderDesaGrid(id, desaObj, color) {
+            // Sort Descending (Jumlah Terbanyak ke Terkecil)
             const sortedDesa = Object.entries(desaObj).sort((a,b) => b[1] - a[1]);
             const html = sortedDesa.map(([name, count], index) => {
                 let medal = '';
@@ -541,6 +540,7 @@
 
         function exportToExcel() {
             const wb = XLSX.utils.book_new();
+            // Sort Descending di Export Excel
             const formatData = (obj) => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([Desa, Jumlah]) => ({ Desa, Jumlah }));
 
             XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["LAPORAN SPM"], ["USPRO", summary.uspro.Total], ["HT", summary.ht.Total], ["DM", summary.dm.Total]]), "Rekap_SPM");
