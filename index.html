@@ -406,7 +406,7 @@
                 await new Promise(r => setTimeout(r, 10)); 
 
                 const rows = await readFile(file); const fname = file.name.toLowerCase();
-                const isDewasa = fname.includes('dewasa'), isLansia = fname.includes('lansia'), isSekolah = fname.includes('sekolah');
+                const isDewasa = fname.includes('dewasa') || fname.includes('mature'), isLansia = fname.includes('lansia') || fname.includes('elderly'), isSekolah = fname.includes('sekolah');
                 if (!isDewasa && !isLansia && !isSekolah) continue;
                 
                 for (let i = 1; i < rows.length; i++) {
