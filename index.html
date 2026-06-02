@@ -441,17 +441,29 @@
                 if (p.age >= 15 && p.age <= 59 && !seenUspro.has(p.id)) {
                     if (p.gender === 'L') summary.uspro.pel_L++; else summary.uspro.pel_P++;
                     seenUspro.add(p.id); exportUSPRO.push({ ID: p.id, JK: p.gender, Usia: p.age, Desa: p.desa, Sumber: "Pelayanan" });
-                    summary.uspro.desa[p.desa] = (summary.uspro.desa[p.desa] || 0) + 1;
+                    
+                    // Rekapan Desa USPRO berdasarkan JK
+                    if (!summary.uspro.desa[p.desa]) summary.uspro.desa[p.desa] = { L: 0, P: 0, Total: 0 };
+                    if (p.gender === 'L') summary.uspro.desa[p.desa].L++; else if (p.gender === 'P') summary.uspro.desa[p.desa].P++;
+                    summary.uspro.desa[p.desa].Total++;
                 }
                 if (p.diag.some(c => HT_CODES.includes(c)) && !seenHT.has(p.id)) {
                     if (p.gender === 'L') summary.ht.pel_L++; else summary.ht.pel_P++;
                     seenHT.add(p.id); exportHT.push({ ID: p.id, JK: p.gender, Desa: p.desa, Sumber: "Pelayanan" });
-                    summary.ht.desa[p.desa] = (summary.ht.desa[p.desa] || 0) + 1;
+                    
+                    // Rekapan Desa HT berdasarkan JK
+                    if (!summary.ht.desa[p.desa]) summary.ht.desa[p.desa] = { L: 0, P: 0, Total: 0 };
+                    if (p.gender === 'L') summary.ht.desa[p.desa].L++; else if (p.gender === 'P') summary.ht.desa[p.desa].P++;
+                    summary.ht.desa[p.desa].Total++;
                 }
                 if (p.diag.some(c => DM_CODES.includes(c)) && !seenDM.has(p.id)) {
                     if (p.gender === 'L') summary.dm.pel_L++; else summary.dm.pel_P++;
                     seenDM.add(p.id); exportDM.push({ ID: p.id, JK: p.gender, Desa: p.desa, Sumber: "Pelayanan" });
-                    summary.dm.desa[p.desa] = (summary.dm.desa[p.desa] || 0) + 1;
+                    
+                    // Rekapan Desa DM berdasarkan JK
+                    if (!summary.dm.desa[p.desa]) summary.dm.desa[p.desa] = { L: 0, P: 0, Total: 0 };
+                    if (p.gender === 'L') summary.dm.desa[p.desa].L++; else if (p.gender === 'P') summary.dm.desa[p.desa].P++;
+                    summary.dm.desa[p.desa].Total++;
                 }
             });
 
@@ -461,19 +473,31 @@
                     if (c.type === 'dewasa_lansia' || (c.type === 'sekolah' && c.age >= 15 && c.age <= 59)) {
                         if (c.gender === 'L') summary.uspro.ckg_L++; else summary.uspro.ckg_P++;
                         seenCKGOnly.add(c.id); exportUSPRO.push({ ID: c.id, JK: c.gender, Usia: c.age||'-', Desa: c.desa, Sumber: "CKG" });
-                        summary.uspro.desa[c.desa] = (summary.uspro.desa[c.desa] || 0) + 1;
+                        
+                        // Rekapan Desa USPRO berdasarkan JK (Tambahan CKG)
+                        if (!summary.uspro.desa[c.desa]) summary.uspro.desa[c.desa] = { L: 0, P: 0, Total: 0 };
+                        if (c.gender === 'L') summary.uspro.desa[c.desa].L++; else if (c.gender === 'P') summary.uspro.desa[c.desa].P++;
+                        summary.uspro.desa[c.desa].Total++;
                     }
                 }
                 if (c.type === 'dewasa_lansia') {
                     if (c.ht && !seenHT.has(c.id)) {
                         if (c.gender === 'L') summary.ht.ckg_L++; else summary.ht.ckg_P++;
                         seenHT.add(c.id); exportHT.push({ ID: c.id, JK: c.gender, Desa: c.desa, Sumber: "CKG" });
-                        summary.ht.desa[c.desa] = (summary.ht.desa[c.desa] || 0) + 1;
+                        
+                        // Rekapan Desa HT berdasarkan JK (Tambahan CKG)
+                        if (!summary.ht.desa[c.desa]) summary.ht.desa[c.desa] = { L: 0, P: 0, Total: 0 };
+                        if (c.gender === 'L') summary.ht.desa[c.desa].L++; else if (c.gender === 'P') summary.ht.desa[c.desa].P++;
+                        summary.ht.desa[c.desa].Total++;
                     }
                     if (c.dm && !seenDM.has(c.id)) {
                         if (c.gender === 'L') summary.dm.ckg_L++; else summary.dm.ckg_P++;
                         seenDM.add(c.id); exportDM.push({ ID: c.id, JK: c.gender, Desa: c.desa, Sumber: "CKG" });
-                        summary.dm.desa[c.desa] = (summary.dm.desa[c.desa] || 0) + 1;
+                        
+                        // Rekapan Desa DM berdasarkan JK (Tambahan CKG)
+                        if (!summary.dm.desa[c.desa]) summary.dm.desa[c.desa] = { L: 0, P: 0, Total: 0 };
+                        if (c.gender === 'L') summary.dm.desa[c.desa].L++; else if (c.gender === 'P') summary.dm.desa[c.desa].P++;
+                        summary.dm.desa[c.desa].Total++;
                     }
                 }
             });
@@ -509,13 +533,20 @@
         }
 
         function renderDesaGrid(id, desaObj, color) {
-            const sortedDesa = Object.entries(desaObj).sort((a,b) => b[1] - a[1]);
-            const html = sortedDesa.map(([name, count], index) => {
+            const sortedDesa = Object.entries(desaObj).sort((a,b) => b[1].Total - a[1].Total);
+            const html = sortedDesa.map(([name, data], index) => {
                 let medal = '';
                 if(index === 0) medal = '🥇'; else if(index === 1) medal = '🥈'; else if(index === 2) medal = '🥉'; else medal = `#${index + 1}`;
-                return `<div class="bg-white p-3 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm border-l-4 border-l-${color}-500">
-                    <div class="flex items-center gap-2 overflow-hidden"><span class="font-black text-slate-400 text-xs w-6">${medal}</span><span class="font-bold text-slate-700 text-xs truncate">${name}</span></div>
-                    <span class="bg-${color}-100 text-${color}-700 px-2 py-1 rounded-lg font-black text-xs shrink-0">${count}</span>
+                return `<div class="bg-white p-3 rounded-xl border border-slate-200 flex justify-between items-center gap-2 shadow-sm border-l-4 border-l-${color}-500">
+                    <div class="flex items-center gap-2 overflow-hidden w-full">
+                        <span class="font-black text-slate-400 text-xs w-6 shrink-0">${medal}</span>
+                        <span class="font-bold text-slate-700 text-xs truncate" title="${name}">${name}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100" title="Laki-laki">L:${data.L}</span>
+                        <span class="text-[10px] font-bold text-pink-600 bg-pink-50 px-1.5 py-0.5 rounded border border-pink-100" title="Perempuan">P:${data.P}</span>
+                        <span class="bg-${color}-100 text-${color}-700 px-2 py-1 rounded-lg font-black text-xs ml-1" title="Total">${data.Total}</span>
+                    </div>
                 </div>`;
             }).join('');
             document.getElementById(id).innerHTML = html || `<p class="text-sm text-slate-400 italic col-span-full">Tidak ada data desa</p>`;
@@ -523,7 +554,14 @@
 
         function exportToExcel() {
             const wb = XLSX.utils.book_new();
-            const formatData = (obj) => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([Desa, Jumlah]) => ({ Desa, Jumlah }));
+            
+            // Format global untuk rekap lokal lama (tetap berupa nilai angka saja)
+            const formatDataGlobal = (obj) => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([Desa, Jumlah]) => ({ Desa, Jumlah }));
+            
+            // Format baru spesifik untuk laporan SPM Desa yang sudah mengandung objek L/P/Total
+            const formatDesaSPM = (obj) => Object.entries(obj)
+                .sort((a,b) => b[1].Total - a[1].Total)
+                .map(([Desa, data]) => ({ Desa: Desa, "Laki-laki": data.L, "Perempuan": data.P, "Total": data.Total }));
 
             const rekapData = [
                 ["LAPORAN REKAPITULASI SPM PRO"],
@@ -549,17 +587,18 @@
             
             XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rekapData), "Rekap_SPM");
 
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.uspro.desa)), "Desa_USPRO");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.ht.desa)), "Desa_HT");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(summary.dm.desa)), "Desa_DM");
+            // Menggunakan formatDesaSPM khusus untuk 3 sheet ini agar menelurkan kolom L dan P
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDesaSPM(summary.uspro.desa)), "Desa_USPRO");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDesaSPM(summary.ht.desa)), "Desa_HT");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDesaSPM(summary.dm.desa)), "Desa_DM");
 
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportUSPRO), "Daftar_Pasien_USPRO");
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportHT), "Daftar_Pasien_HT");
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportDM), "Daftar_Pasien_DM");
             
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.pelayananP)), "Rekap_Lokal_PelayananP");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgDewasaF)), "Rekap_Lokal_CKGDewasaF");
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatData(desaAnalysisGlobal.ckgLansiaF)), "Rekap_Lokal_CKGLansiaF");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDataGlobal(desaAnalysisGlobal.pelayananP)), "Rekap_Lokal_PelayananP");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDataGlobal(desaAnalysisGlobal.ckgDewasaF)), "Rekap_Lokal_CKGDewasaF");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(formatDataGlobal(desaAnalysisGlobal.ckgLansiaF)), "Rekap_Lokal_CKGLansiaF");
             
             XLSX.writeFile(wb, "Rekapan_SPM_Lengkap_dan_Desa.xlsx");
         }
